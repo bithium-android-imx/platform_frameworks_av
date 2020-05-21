@@ -458,7 +458,7 @@ status_t MediaRecorderClient::setListener(const sp<IMediaRecorderClient>& listen
     // Use checkService for camera if we don't know it exists.
     static std::atomic<bool> sCameraChecked(false);  // once true never becomes false.
     static std::atomic<bool> sCameraVerified(false); // once true never becomes false.
-    sp<IBinder> binder = (sCameraVerified || !sCameraChecked)
+    sp<IBinder> binder = (sCameraVerified && sCameraChecked)
         ? sm->getService(String16("media.camera")) : sm->checkService(String16("media.camera"));
     // If the device does not have a camera, do not create a death listener for it.
     if (binder != NULL) {
